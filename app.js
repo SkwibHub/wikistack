@@ -3,6 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const { db } = require('./models');
 const wikivar = require('./models');
+db.sync({force: true});
 module.exports = app; // this line is only used to make testing easier.
 
 
@@ -34,11 +35,10 @@ then(() => {
 const PORT = 3000;
 
 const init = async() => {
-    await wikivar.User.sync();
-    await wikivar.Page.sync();
+    await wikivar.db.sync();
     
     app.listen (PORT, () => {
-        console.log(`App listenin in port ${PORT}`);
+        console.log(`App listening in port ${PORT}`);
     });
 }
 

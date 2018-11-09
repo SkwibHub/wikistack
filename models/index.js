@@ -8,19 +8,22 @@ module.exports = app; // this line is only used to make testing easier.
 const Sequelize = require('sequelize');
 const db = new Sequelize('wikistack', 'postgres', 'postgres', {
     host: 'localhost',
-    dialect: 'postgres'
+    dialect: 'postgres',
+    logging: false
 });
 
 const User = db.define('user', {
-    name: Sequelize.STRING,
-    email: Sequelize.STRING,
+    name: { type: Sequelize.STRING, allowNull: false },
+    email: { type: Sequelize.STRING, allowNull: false }
 })
 
 const Page = db.define('page', {
-    title: Sequelize.STRING,
-    slug: Sequelize.STRING,
-    content: Sequelize.TEXT,
-    status: Sequelize.BOOLEAN,
+    title: { type: Sequelize.STRING, allowNull: false },
+    slug: { type: Sequelize.STRING, allowNull: false },
+    content: { type: Sequelize.STRING, allowNull: false },
+    status: {
+        type: Sequelize.ENUM('open', 'closed')
+      }
 })
 
 module.exports = {
