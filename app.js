@@ -13,15 +13,28 @@ app.use(bodyParser.urlencoded({
 
 app.use(morgan('dev'));
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/views'));
 
-app.use("/", require('./views/index'));
+// app.use("/", require('./views/index'));
+
+app.get('/', (req, res) => {
+    res.send('Test 2');
+})
 
 
 //----------------------------------
+
 db.authenticate().
 then(() => {
   console.log('connected to the database');
+}) // ISSUES HERE BECAUSE OF SEQUELIZE PASSWORD ERROR, OTHERWISE IT CONNECTS THRU PORT 3000
+
+
+const PORT = 3000;
+app.listen (PORT, () => {
+    console.log(`App listenin in port ${PORT}`);
 })
+
+
 
 
