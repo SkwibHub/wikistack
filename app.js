@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const { db } = require('./models');
-const wikivar = require('./models');
+const wikiModels = require('./models');
+const wikiRouter = require('./routes/wiki');
+const userRouter = require('./routes/user');
 db.sync({force: true});
 module.exports = app; // this line is only used to make testing easier.
 
@@ -16,8 +18,8 @@ app.use(bodyParser.urlencoded({
 app.use(morgan('dev'));
 
 app.use(express.static(__dirname + '/views'));
-
-// app.use("/", require('./views/index'));
+ 
+app.use('/wiki', wikiRouter);
 
 app.get('/', (req, res) => {
     res.send('Test 2');
@@ -35,7 +37,7 @@ then(() => {
 const PORT = 3000;
 
 const init = async() => {
-    await wikivar.db.sync();
+    await wikiModels.db.sync();
     
     app.listen (PORT, () => {
         console.log(`App listening in port ${PORT}`);

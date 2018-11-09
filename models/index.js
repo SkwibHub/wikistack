@@ -5,6 +5,7 @@ const router = express.Router();
 module.exports = app; // this line is only used to make testing easier.
 
 
+
 const Sequelize = require('sequelize');
 const db = new Sequelize('wikistack', 'postgres', 'postgres', {
     host: 'localhost',
@@ -14,7 +15,13 @@ const db = new Sequelize('wikistack', 'postgres', 'postgres', {
 
 const User = db.define('user', {
     name: { type: Sequelize.STRING, allowNull: false },
-    email: { type: Sequelize.STRING, allowNull: false }
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          isEmail: true
+        }
+      }
 })
 
 const Page = db.define('page', {
@@ -25,6 +32,9 @@ const Page = db.define('page', {
         type: Sequelize.ENUM('open', 'closed')
       }
 })
+
+console.log('index.js'); // TESTS IF THIS FILE IS ACCESSED
+
 
 module.exports = {
     db,
