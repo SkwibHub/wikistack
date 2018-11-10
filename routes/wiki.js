@@ -21,11 +21,11 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     res.send('Got to GET /wiki/');
 })
-
+ 
 
 router.get('/add', (req, res, next) => {
     res.send(addPage());
-})
+}) 
 
 
 
