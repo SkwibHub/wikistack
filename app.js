@@ -32,15 +32,17 @@ app.get('/', (req, res, next) => {
 db.authenticate().
 then(() => {
   console.log('connected to the database');
-}) // ISSUES HERE BECAUSE OF SEQUELIZE PASSWORD ERROR, OTHERWISE IT CONNECTS THRU PORT 3000
+}) 
 
 
 const PORT = 3000;
 
-const init = async() => {
-    await wikiModels.db.sync();
+const init = async function() {
+    await wikiModels.User.sync();
+    await wikiModels.Page.sync();
+
     
-    app.listen (PORT, () => {
+    app.listen(PORT, () => {
         console.log(`App listening in port ${PORT}`);
     });
 }
