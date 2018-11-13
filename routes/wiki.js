@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const router = express.Router();
+const { Page, User } = require('../models');
 
 var bodyParser = require('body-parser');
 router.use(bodyParser.json()); // support json encoded bodies
@@ -10,16 +11,20 @@ router.use(bodyParser.urlencoded({
 })); // support encoded bodies
 
 
-const { addPage } = require('../views');
+const { addPage } = require('../views'); 
 
 
 router.get('/', (req, res, next) => {
-    res.redirect('/wiki');
+    res.redirect('/wiki'); 
 })
 
 
-router.post('/', (req, res, next) => {
-    res.send('Got to GET /wiki/');
+router.post('/', async (req, res, next) => {
+    const page = new Page(req.body);
+    try {
+        await page.save();
+        res.redirect('/');
+    } catch(error) { next(error)}
 })
  
 

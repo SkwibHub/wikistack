@@ -20,10 +20,11 @@ app.use(morgan('dev'));
 app.use(express.static(__dirname + '/views'));
  
 app.use('/wiki', wikiRouter);
+app.use('/user', userRouter);
 
-app.get('/', (req, res) => {
-    res.send('Test 2');
-})
+app.get('/', (req, res, next) => {
+    res.redirect('/wiki'); 
+});
 
 
 //----------------------------------
